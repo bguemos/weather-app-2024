@@ -1,0 +1,25 @@
+.weathercontainer{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.temp{
+ 
+    font-size: 30px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 4%;
+    margin-left: 20%;
+}
+.weatherinfo {
+    margin-top: 4%;
+}
+
+.city{
+    font-size: 25px;
+    font-weight: bold;
+}

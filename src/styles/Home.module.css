@@ -1,0 +1,78 @@
+.maincontent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1%;
+    
+    
+}
+.header{
+    font-size: 40px;
+    font-weight: 900;
+    
+}
+
+.button {
+    border-radius: 20px;
+    background-color: transparent;
+    border: 1px solid black;
+    width: 200px;
+    padding: 1%;
+    box-shadow: 4px 4px 4px rgba(206, 206, 206, 0.5);
+  
+}
+.inputbox {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 300px;
+    padding: 1%;
+  
+}
+
+.button:hover{
+    background-color: rgb(122, 212, 242);
+}
+
+.weatherinfo{
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0.7;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.5);
+    height: 200px;
+    padding: 2%;
+    color: white;
+    width: 600px;
+    margin-top: 2%;
+   
+
+
+}
+
+.forecastcontainer {
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0.7;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.5);
+    height: 200px;
+    padding: 2%;
+    width: 550px;
+    height: 800px;
+    margin-top: 4%;
+    color: white;
+
+}
+
+.forecastitems{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 100px;
+}
+
+.title{
+    font-weight: bolder;
+    margin-bottom: 2%;
+}
