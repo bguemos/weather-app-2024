@@ -11,12 +11,22 @@ const Home = () => {
     const [forecast, setForecast] = useState<any[]>([]);
     const [city, setCity] = useState('');
 
-    const apiKey = '3abcdf226f6de40c27fb51fdf5d7e207';
+    const apiKey = process.env.NEXT_PUBLIC_API;
     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}`;
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apiKey}`;
 
+  
+
+
+    const getWeather = () => {
+        if (!city) {
+            alert('Please enter a city');
+            return;
+        }
+    };
     useEffect(() => {
         if (!city) return;
+        
 
         fetch(currentWeatherUrl)
             .then(response => response.json())
@@ -27,6 +37,8 @@ const Home = () => {
                 console.error('Error fetching current weather data:', error);
                 alert('Error fetching current weather data. Please try again.');
             });
+          
+        
 
         fetch(forecastUrl)
             .then(response => response.json())
@@ -36,13 +48,12 @@ const Home = () => {
                     const year = parseInt(dateParts[0]);
                     const month = parseInt(dateParts[1]);
                     const day = parseInt(dateParts[2].split(' ')[0]);
-
+                
                     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                     const formattedDate = `${months[month - 1]} ${day}, ${year}`;
-
-                    if (!acc[formattedDate]) {
-                        acc[formattedDate] = current;
-                    }
+                
+                    acc[formattedDate] = current;
+                    
                     return acc;
                 }, {});
 
@@ -55,12 +66,7 @@ const Home = () => {
             });
     }, [city, currentWeatherUrl, forecastUrl]);
 
-    const getWeather = () => {
-        if (!city) {
-            alert('Please enter a city');
-            return;
-        }
-    };
+
 
     return (
         <>
@@ -93,10 +99,10 @@ const Home = () => {
                     <h2 className={styles.title}>5-Day Forecast</h2>
                     {forecast && forecast.map((item, index) => (
                         <div key={index} className={styles.forecastitems}>
-                            <p> {new Date(item.dt * 1000).toLocaleDateString()}</p>
+                        <strong>  <p>{new Date(item.dt * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></strong>   
                             <p> {Math.round(item.main.temp - 273.15)}°C</p>
                             <p>{item.weather[0].description}</p>
-                            {/* Add WeatherIcon component */}
+                          
                             <WeatherIcon weatherCondition={item.weather[0].main} />
                         </div>
                     ))}

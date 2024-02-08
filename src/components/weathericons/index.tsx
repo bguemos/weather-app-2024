@@ -24,7 +24,7 @@ const WeatherIcon: React.FC<WeatherIconProps> = ({ weatherCondition }) => {
       iconSrc = '/mixed.png'; 
   }
 
-  return <img src={iconSrc} alt={weatherCondition} style={{ width: 75, height: 75 }} />;
+  return <img src={iconSrc} alt={weatherCondition} style={{ width: 70, height: 65 }} />;
 };
 
 export default WeatherIcon;
