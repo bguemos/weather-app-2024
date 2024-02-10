@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Container from '../components/container';
+import Container, { ForecastData }  from '../components/container';
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import Header from '../components/header';
@@ -10,35 +10,33 @@ const Home = () => {
     const [data, setData] = useState<ForecastData | null>(null);
     const [forecast, setForecast] = useState<any[]>([]);
     const [city, setCity] = useState('');
+    const [lastUpdated, setLastUpdated] = useState('');
 
     const apiKey = process.env.NEXT_PUBLIC_API;
     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}`;
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apiKey}`;
-
-  
-
 
     const getWeather = () => {
         if (!city) {
             alert('Please enter a city');
             return;
         }
-    };
-    useEffect(() => {
-        if (!city) return;
         
+     
+        fetchWeatherData();
+    };
 
+    const fetchWeatherData = () => {
         fetch(currentWeatherUrl)
             .then(response => response.json())
             .then(data => {
                 setData(data);
+                setLastUpdated(new Date(data.dt * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
             })
             .catch(error => {
                 console.error('Error fetching current weather data:', error);
                 alert('Error fetching current weather data. Please try again.');
             });
-          
-        
 
         fetch(forecastUrl)
             .then(response => response.json())
@@ -64,9 +62,7 @@ const Home = () => {
                 console.error('Error fetching forecast data:', error);
                 alert('Error fetching forecast data. Please try again.');
             });
-    }, [city, currentWeatherUrl, forecastUrl]);
-
-
+    };
 
     return (
         <>
@@ -84,6 +80,7 @@ const Home = () => {
             <main className={styles.maincontent}>
               <h1 className={styles.header}>Weather in Focus: Your Trusted Source for Forecasts</h1>
                 <div className={styles.weatherinfo}>
+                    <div className={styles.buttonrow}>
                     <input
                         className={styles.inputbox}
                         type="text"
@@ -93,16 +90,16 @@ const Home = () => {
                         onChange={(e) => setCity(e.target.value)}
                     />
                     <button className={styles.button} onClick={getWeather}>Get Weather</button>
-                    <Container data={data} />
+                    </div>
+                    {data && <Container data={data} />}
                 </div>
                 <div className={styles.forecastcontainer} id="forecast-container">
                     <h2 className={styles.title}>5-Day Forecast</h2>
                     {forecast && forecast.map((item, index) => (
                         <div key={index} className={styles.forecastitems}>
-                        <strong>  <p>{new Date(item.dt * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></strong>   
-                            <p> {Math.round(item.main.temp - 273.15)}°C</p>
+                            <strong><p>{new Date(item.dt * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></strong>   
+                            <p>{Math.round(item.main.temp - 273.15)}°C</p>
                             <p>{item.weather[0].description}</p>
-                          
                             <WeatherIcon weatherCondition={item.weather[0].main} />
                         </div>
                     ))}

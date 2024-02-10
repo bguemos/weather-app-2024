@@ -23,3 +23,16 @@
     font-size: 25px;
     font-weight: bold;
 }
+
+
+@media screen and (max-width: 430px) {
+   
+   .weatherinfo {
+    height: 50%;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+
+   }
+
+   }
